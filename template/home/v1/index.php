@@ -4,13 +4,11 @@
 @ini_set('display_errors', 'Off');
 $rootPath = dirname(__DIR__, 3); 
 define('ROOT_PATH', $rootPath . '/');
-
 if (!file_exists(ROOT_PATH . 'config.php')) { 
     die("系统错误：配置文件丢失。路径: " . ROOT_PATH . 'config.php'); 
 }
 require_once 'config.php';
 require_once 'common/TemplateManager.php';
-
 function checkUserLoginStatus() {
     if (!isset($_SESSION['user_id'])) {
         return false;
@@ -36,10 +34,8 @@ function checkUserLoginStatus() {
     unset($_SESSION['user_id'], $_SESSION['user_username'], $_SESSION['user_email']);
     return false;
 }
-
 $is_logged_in = checkUserLoginStatus();
 $user_info = $is_logged_in ? ['username' => $_SESSION['user_username'], 'email' => $_SESSION['user_email']] : null;
-
 try {
     $homeTemplate = TemplateManager::getActiveHomeTemplate() ?: 'default';
     $userTemplate = TemplateManager::getActiveUserTemplate() ?: 'default';
@@ -48,12 +44,9 @@ try {
     $userTemplate = 'default';
     error_log("获取模板信息失败: " . $e->getMessage());
 }
-
 $homeTemplateBaseUrl = "/template/home/{$homeTemplate}/";
 $userTemplateBaseUrl = "/template/user/{$userTemplate}/";
-
 $apis = []; $announcement = null; $settings = [];
-
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -75,12 +68,10 @@ try {
         'allow_temp_key' => 1
     ];
 }
-
 $site_name = $settings['site_name'] ?? '白子API';
 $site_description = $settings['site_description'] ?? '一个稳定、快速、易用的高质量API服务平台';
 $copyright_info = $settings['copyright_info'] ?? '白子';
 $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_temp_key'] : 1;
-
 ?>
 <!DOCTYPE html>
 <html lang="zh">
@@ -91,7 +82,7 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-<meta name="description" content="白子API致力于为用户提供稳定、高效的API接口服务，包含随机一言、工具类API等多种接口">
+<meta name="description" content="白子API致力于为用户提供稳定、高效的API接口服务，包含光遇、工具类API等多种接口">
 <meta name="keywords" content="白子API,API接口,聚合数据,API数据接口,免费API数据接口,API接口管理系统,免费API数据调用,API,接口">
 <meta name="author" content="白子网络科技">
 <link rel="shortcut icon" type="image/x-icon" href="https://q4.qlogo.cn/g?b=qq&nk=2209176666&s=640">
@@ -106,12 +97,10 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
 <link rel="stylesheet" type="text/css" href="../../../assets/js/bootstrap-multitabs/multitabs.min.css">
 <link rel="stylesheet" type="text/css" href="../../../assets/css/style.min.css">
 </head>
-
 <body class="lyear-index">
 <div class="lyear-layout-web">
   <div class="lyear-layout-container">
     <aside class="lyear-layout-sidebar">
-
       <div id="logo" class="sidebar-header">
         <a href="index.php"><img src="../../../assets/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
       </div>
@@ -145,9 +134,7 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                 </div>
             <?php endif; ?>
         </div>
-
                 <nav class="sidebar-main">
-
           <ul class="nav-drawer">
             <li class="nav-item active">
               <a class="multitabs" href="<?= $homeTemplateBaseUrl ?>main1.php" id="default-page">
@@ -197,22 +184,24 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
         </a>
     </li>
 <?php endif; ?>
+            <!-- 新增【关于】入口 -->
+            <li class="nav-item active">
+              <a class="multitabs" href="/ng/gu/gu.php" target="_blank">
+                <i class="mdi mdi-information-outline"></i>
+                <span>关于</span>
+              </a>
+            </li>
           </ul>
         </nav>
-
         <div class="sidebar-footer">
           <p class="copyright">
             <span><?php echo htmlspecialchars($copyright_info); ?> </span>
           </p>
         </div>
       </div>
-
     </aside>
-
     <header class="lyear-layout-header">
-
       <nav class="navbar">
-
         <div class="navbar-left">
           <div class="lyear-aside-toggler">
             <span class="lyear-toggler-bar"></span>
@@ -220,9 +209,7 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
             <span class="lyear-toggler-bar"></span>
           </div>
         </div>
-
         <ul class="navbar-right d-flex align-items-center">
-
           <li class="dropdown dropdown-skin">
             <span data-bs-toggle="dropdown" class="icon-item">
               <i class="mdi mdi-palette fs-5"></i>
@@ -235,31 +222,31 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                   <label class="form-check-label" for="site_theme_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_2" value="translucent-green">
+                  <input class="form-check-input" type="radio" name="site_theme_2" value="translucent-green">
                   <label class="form-check-label" for="site_theme_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_3" value="translucent-blue">
+                  <input class="form-check-input" type="radio" name="site_theme_3" value="translucent-blue">
                   <label class="form-check-label" for="site_theme_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_4" value="translucent-yellow">
+                  <input class="form-check-input" type="radio" name="site_theme_4" value="translucent-yellow">
                   <label class="form-check-label" for="site_theme_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_5" value="translucent-red">
+                  <input class="form-check-input" type="radio" name="site_theme_5" value="translucent-red">
                   <label class="form-check-label" for="site_theme_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_6" value="translucent-pink">
+                  <input class="form-check-input" type="radio" name="site_theme_6" value="translucent-pink">
                   <label class="form-check-label" for="site_theme_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_7" value="translucent-cyan">
+                  <input class="form-check-input" type="radio" name="site_theme_7" value="translucent-cyan">
                   <label class="form-check-label" for="site_theme_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_8" value="dark">
+                  <input class="form-check-input" type="radio" name="site_theme_8" value="dark">
                   <label class="form-check-label" for="site_theme_8"></label>
                 </div>
               </li>
@@ -270,31 +257,31 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                   <label class="form-check-label" for="logo_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="logo_bg_2" value="color_2">
                   <label class="form-check-label" for="logo_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="logo_bg_3" value="color_3">
                   <label class="form-check-label" for="logo_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="logo_bg_4" value="color_4">
                   <label class="form-check-label" for="logo_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="logo_bg_5" value="color_5">
                   <label class="form-check-label" for="logo_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="logo_bg_6" value="color_6">
                   <label class="form-check-label" for="logo_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="logo_bg_7" value="color_7">
                   <label class="form-check-label" for="logo_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="logo_bg_8" value="color_8">
                   <label class="form-check-label" for="logo_bg_8"></label>
                 </div>
               </li>
@@ -305,31 +292,31 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                   <label class="form-check-label" for="header_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="header_bg_2" value="color_2">
                   <label class="form-check-label" for="header_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="header_bg_3" value="color_3">
                   <label class="form-check-label" for="header_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="header_bg_4" value="color_4">
                   <label class="form-check-label" for="header_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="header_bg_5" value="color_5">
                   <label class="form-check-label" for="header_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="header_bg_6" value="color_6">
                   <label class="form-check-label" for="header_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="header_bg_7" value="color_7">
                   <label class="form-check-label" for="header_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="header_bg_8" value="color_8">
                   <label class="form-check-label" for="header_bg_8"></label>
                 </div>
               </li>
@@ -340,31 +327,31 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                   <label class="form-check-label" for="sidebar_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_2" value="color_2">
                   <label class="form-check-label" for="sidebar_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_3" value="color_3">
                   <label class="form-check-label" for="sidebar_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_4" value="color_4">
                   <label class="form-check-label" for="sidebar_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_5" value="color_5">
                   <label class="form-check-label" for="sidebar_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_6" value="color_6">
                   <label class="form-check-label" for="sidebar_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_7" value="color_7">
                   <label class="form-check-label" for="sidebar_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_8" value="color_8">
                   <label class="form-check-label" for="sidebar_bg_8"></label>
                 </div>
               </li>
@@ -412,18 +399,12 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
             </ul>
           </li>
         </ul>
-
       </nav>
-
     </header>
-
     <main class="lyear-layout-content">
-
       <div id="iframe-content"></div>
-
     </main>
   </div>
-
 <script type="text/javascript" src="../../../assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/popper.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/bootstrap.min.js"></script>
