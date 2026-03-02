@@ -35,7 +35,6 @@ function checkUserLoginStatus() {
     unset($_SESSION['user_id'], $_SESSION['user_username'], $_SESSION['user_email']);
     return false;
 }
-
 $is_logged_in = checkUserLoginStatus();
 $user_info = $is_logged_in ? ['username' => $_SESSION['user_username'], 'email' => $_SESSION['user_email']] : null;
 $currentTemplate = basename(dirname(__FILE__));
@@ -101,13 +100,11 @@ if ($currentTemplate !== $activeTemplate) {
 <link rel="stylesheet" type="text/css" href="../../../assets/js/bootstrap-multitabs/multitabs.min.css">
 <link rel="stylesheet" type="text/css" href="../../../assets/css/style.min.css">
 </head>
-
 <body class="lyear-index">
 <div class="lyear-layout-web">
   <div class="lyear-layout-container">
     <!--左侧导航-->
     <aside class="lyear-layout-sidebar">
-
       <!-- logo -->
       <div id="logo" class="sidebar-header">
         <a href="index.php"><img src="../../../assets/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
@@ -145,7 +142,6 @@ if ($currentTemplate !== $activeTemplate) {
                 </div>
             <?php endif; ?>
         </div>
-
         <nav class="sidebar-main">
           <ul class="nav-drawer">
             <li class="nav-item active">
@@ -192,9 +188,15 @@ if ($currentTemplate !== $activeTemplate) {
                 <span>视频播放器</span>
               </a>
             </li>
+            <!-- 新增【关于】入口 -->
+            <li class="nav-item active">
+              <a class="multitabs" href="/ng/gu/gu.php" target="_blank">
+                <i class="mdi mdi-information-outline"></i>
+                <span>关于</span>
+              </a>
+            </li>
           </ul>
         </nav>
-
         <div class="sidebar-footer">
           <p class="copyright">
             <span>版权认证&copy; 2025-<?php echo "".date("Y").""; ?> </span>
@@ -202,15 +204,11 @@ if ($currentTemplate !== $activeTemplate) {
           </p>
         </div>
       </div>
-
     </aside>
     <!--End 左侧导航-->
-
     <!--头部信息-->
     <header class="lyear-layout-header">
-
       <nav class="navbar">
-
         <div class="navbar-left">
           <div class="lyear-aside-toggler">
             <span class="lyear-toggler-bar"></span>
@@ -218,9 +216,7 @@ if ($currentTemplate !== $activeTemplate) {
             <span class="lyear-toggler-bar"></span>
           </div>
         </div>
-
         <ul class="navbar-right d-flex align-items-center">
-
           <!--切换主题配色-->
 		  <li class="dropdown dropdown-skin">
 		    <span data-bs-toggle="dropdown" class="icon-item">
@@ -234,31 +230,31 @@ if ($currentTemplate !== $activeTemplate) {
                   <label class="form-check-label" for="site_theme_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_2" value="translucent-green">
+                  <input class="form-check-input" type="radio" name="site_theme_2" value="translucent-green">
                   <label class="form-check-label" for="site_theme_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_3" value="translucent-blue">
+                  <input class="form-check-input" type="radio" name="site_theme_3" value="translucent-blue">
                   <label class="form-check-label" for="site_theme_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_4" value="translucent-yellow">
+                  <input class="form-check-input" type="radio" name="site_theme_4" value="translucent-yellow">
                   <label class="form-check-label" for="site_theme_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_5" value="translucent-red">
+                  <input class="form-check-input" type="radio" name="site_theme_5" value="translucent-red">
                   <label class="form-check-label" for="site_theme_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_6" value="translucent-pink">
+                  <input class="form-check-input" type="radio" name="site_theme_6" value="translucent-pink">
                   <label class="form-check-label" for="site_theme_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_7" value="translucent-cyan">
+                  <input class="form-check-input" type="radio" name="site_theme_7" value="translucent-cyan">
                   <label class="form-check-label" for="site_theme_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_8" value="dark">
+                  <input class="form-check-input" type="radio" name="site_theme_8" value="dark">
                   <label class="form-check-label" for="site_theme_8"></label>
                 </div>
               </li>
@@ -269,31 +265,31 @@ if ($currentTemplate !== $activeTemplate) {
                   <label class="form-check-label" for="logo_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="logo_bg_2" value="color_2">
                   <label class="form-check-label" for="logo_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="logo_bg_3" value="color_3">
                   <label class="form-check-label" for="logo_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="logo_bg_4" value="color_4">
                   <label class="form-check-label" for="logo_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="logo_bg_5" value="color_5">
                   <label class="form-check-label" for="logo_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="logo_bg_6" value="color_6">
                   <label class="form-check-label" for="logo_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="logo_bg_7" value="color_7">
                   <label class="form-check-label" for="logo_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="logo_bg" id="logo_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="logo_bg_8" value="color_8">
                   <label class="form-check-label" for="logo_bg_8"></label>
                 </div>
 			  </li>
@@ -304,31 +300,31 @@ if ($currentTemplate !== $activeTemplate) {
                   <label class="form-check-label" for="header_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="header_bg_2" value="color_2">
                   <label class="form-check-label" for="header_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="header_bg_3" value="color_3">
                   <label class="form-check-label" for="header_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="header_bg_4" value="color_4">
                   <label class="form-check-label" for="header_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="header_bg_5" value="color_5">
                   <label class="form-check-label" for="header_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="header_bg_6" value="color_6">
                   <label class="form-check-label" for="header_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="header_bg_7" value="color_7">
                   <label class="form-check-label" for="header_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="header_bg" id="header_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="header_bg_8" value="color_8">
                   <label class="form-check-label" for="header_bg_8"></label>
                 </div>
 			  </li>
@@ -339,31 +335,31 @@ if ($currentTemplate !== $activeTemplate) {
                   <label class="form-check-label" for="sidebar_bg_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_2" value="color_2">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_2" value="color_2">
                   <label class="form-check-label" for="sidebar_bg_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_3" value="color_3">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_3" value="color_3">
                   <label class="form-check-label" for="sidebar_bg_3"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_4" value="color_4">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_4" value="color_4">
                   <label class="form-check-label" for="sidebar_bg_4"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_5" value="color_5">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_5" value="color_5">
                   <label class="form-check-label" for="sidebar_bg_5"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_6" value="color_6">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_6" value="color_6">
                   <label class="form-check-label" for="sidebar_bg_6"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_7" value="color_7">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_7" value="color_7">
                   <label class="form-check-label" for="sidebar_bg_7"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="sidebar_bg" id="sidebar_bg_8" value="color_8">
+                  <input class="form-check-input" type="radio" name="sidebar_bg_8" value="color_8">
                   <label class="form-check-label" for="sidebar_bg_8"></label>
                 </div>
 			  </li>
@@ -416,22 +412,16 @@ if ($currentTemplate !== $activeTemplate) {
           </li>
           <!--End 个人头像内容-->
         </ul>
-
       </nav>
-
     </header>
     <!--End 头部信息-->
-
     <!--页面主要内容-->
     <main class="lyear-layout-content">
-
       <div id="iframe-content"></div>
-
     </main>
     <!--End 页面主要内容-->
   </div>
 </div>
-
 <script type="text/javascript" src="../../../assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/popper.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/bootstrap.min.js"></script>
