@@ -35,19 +35,15 @@ $username = htmlspecialchars($_SESSION['admin_username']);
 <link rel="stylesheet" type="text/css" href="../assets/js/bootstrap-multitabs/multitabs.min.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/style.min.css">
 </head>
-
 <body class="lyear-index">
 <div class="lyear-layout-web">
   <div class="lyear-layout-container">
     <aside class="lyear-layout-sidebar">
-
       <div id="logo" class="sidebar-header">
         <a href="index.html"><img src="../assets/images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
       </div>
       <div class="lyear-layout-sidebar-info lyear-scroll">
-
         <nav class="sidebar-main">
-
           <ul class="nav-drawer">
             <li class="nav-item active">
               <a class="multitabs" href="main.php" id="default-page">
@@ -141,9 +137,15 @@ $username = htmlspecialchars($_SESSION['admin_username']);
                 <li> <a class="multitabs" href="/snq/index.html">视频播放器</a> </li>
               </ul>
             </li>
+            <!-- 新增【关于】入口 -->
+            <li class="nav-item">
+              <a class="multitabs" href="/ng/gu/gu.php" target="_blank">
+                <i class="mdi mdi-information-outline"></i>
+                <span>关于</span>
+              </a>
+            </li>
           </ul>
         </nav>
-
         <div class="sidebar-footer">
           <p class="copyright">
             <span> &copy; 2025-<?php echo "".date("Y").""; ?>. </span>
@@ -151,13 +153,9 @@ $username = htmlspecialchars($_SESSION['admin_username']);
           </p>
         </div>
       </div>
-
     </aside>
-
     <header class="lyear-layout-header">
-
       <nav class="navbar">
-
         <div class="navbar-left">
           <div class="lyear-aside-toggler">
             <span class="lyear-toggler-bar"></span>
@@ -165,9 +163,7 @@ $username = htmlspecialchars($_SESSION['admin_username']);
             <span class="lyear-toggler-bar"></span>
           </div>
         </div>
-
         <ul class="navbar-right d-flex align-items-center">
-
           <li class="dropdown dropdown-skin">
             <span data-bs-toggle="dropdown" class="icon-item">
               <i class="mdi mdi-palette fs-5"></i>
@@ -180,7 +176,7 @@ $username = htmlspecialchars($_SESSION['admin_username']);
                   <label class="form-check-label" for="site_theme_1"></label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="site_theme" id="site_theme_2" value="translucent-green">
+                  <input class="form-check-input" type="radio" name="site_theme_2" value="translucent-green">
                   <label class="form-check-label" for="site_theme_2"></label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -344,19 +340,13 @@ $username = htmlspecialchars($_SESSION['admin_username']);
             </ul>
           </li>
         </ul>
-
       </nav>
-
     </header>
-
     <main class="lyear-layout-content">
-
       <div id="iframe-content"></div>
-
     </main>
   </div>
 </div>
-
 <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="../assets/js/popper.min.js"></script>
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
