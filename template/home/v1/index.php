@@ -46,7 +46,7 @@ try {
 }
 $homeTemplateBaseUrl = "/template/home/{$homeTemplate}/";
 $userTemplateBaseUrl = "/template/user/{$userTemplate}/";
-$apis = []; $announcement = null; $settings = [];
+$apis = []; $announcement = null; $settings = []; $recent_announcements = [];
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -56,6 +56,9 @@ try {
     
     $stmt_announcement = $pdo->query("SELECT * FROM sl_announcements WHERE is_active = 1 ORDER BY created_at DESC LIMIT 1");
     $announcement = $stmt_announcement->fetch(PDO::FETCH_ASSOC);
+
+    $stmt_recent = $pdo->query("SELECT * FROM sl_announcements WHERE is_active = 1 ORDER BY created_at DESC LIMIT 3");
+    $recent_announcements = $stmt_recent->fetchAll(PDO::FETCH_ASSOC);
     
     $stmt_settings = $pdo->query("SELECT setting_key, setting_value FROM sl_settings");
     $settings = $stmt_settings->fetchAll(PDO::FETCH_KEY_PAIR);
@@ -134,7 +137,36 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
                 </div>
             <?php endif; ?>
         </div>
-                <nav class="sidebar-main">
+        <div class="recent-announcements p-3 border-bottom">
+            <h6 class="fw-bold mb-3"><i class="mdi mdi-bullhorn-outline me-2"></i>最近公告</h6>
+            <?php if (!empty($recent_announcements)): ?>
+                <ul class="list-unstyled mb-0">
+                    <?php foreach ($recent_announcements as $item): 
+                        $year = date('Y', strtotime($item['created_at']));
+                        $month = date('n', strtotime($item['created_at']));
+                        $day = date('j', strtotime($item['created_at']));
+                        $time = date('H:i:s', strtotime($item['created_at']));
+                        $formatted_time = "{$year}年{$month}月{$day}日 {$time}";
+                    ?>
+                        <li class="mb-3">
+                            <a href="javascript:void(0);" class="text-decoration-none announcement-link d-block"
+                               data-title="<?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?>"
+                               data-content="<?php echo htmlspecialchars($item['content'], ENT_QUOTES, 'UTF-8'); ?>"
+                               data-created="<?php echo htmlspecialchars($item['created_at']); ?>">
+                                <span class="d-block fw-normal text-dark">
+                                    <i class="mdi mdi-circle-small text-primary"></i>
+                                    <?php echo htmlspecialchars($item['title'], ENT_QUOTES, 'UTF-8'); ?>
+                                </span>
+                                <span class="d-block small text-muted mt-1">发布时间:<?php echo $formatted_time; ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p class="text-muted small mb-0">暂无公告</p>
+            <?php endif; ?>
+        </div>
+        <nav class="sidebar-main">
           <ul class="nav-drawer">
             <li class="nav-item active">
               <a class="multitabs" href="<?= $homeTemplateBaseUrl ?>main1.php" id="default-page">
@@ -405,6 +437,24 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
       <div id="iframe-content"></div>
     </main>
   </div>
+
+<!-- 公告详情模态框 -->
+<div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="announcementModalLabel">公告详情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 id="modalAnnouncementTitle" class="fw-bold"></h6>
+                <p id="modalAnnouncementContent" class="mt-2" style="white-space: pre-wrap; word-break: break-word;"></p>
+                <div id="modalAnnouncementTime" class="text-muted small mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript" src="../../../assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/popper.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/bootstrap.min.js"></script>
@@ -413,6 +463,20 @@ $allow_temp_key = isset($settings['allow_temp_key']) ? (int)$settings['allow_tem
 <script type="text/javascript" src="../../../assets/js/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/../../assets/js/index.min.js"></script>
 <script type="text/javascript">
+function formatTime(datetimeStr) {
+    var date = new Date(datetimeStr);
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    return year + '年' + month + '月' + day + '日 ' + 
+           (hours < 10 ? '0' + hours : hours) + ':' + 
+           (minutes < 10 ? '0' + minutes : minutes) + ':' + 
+           (seconds < 10 ? '0' + seconds : seconds);
+}
+
 $(document).ready(function() {
     if (performance.navigation.type === 1 && 
         (document.referrer.indexOf('login.php') !== -1 || 
@@ -431,6 +495,29 @@ $(document).ready(function() {
             }
         });
     }, 300000);
+
+    <?php if (!empty($announcement)): 
+        $announcement_title = $announcement['title'];
+        $announcement_content = $announcement['content'];
+        $simple_time = date('Y-m-d H:i:s', strtotime($announcement['created_at']));
+    ?>
+
+    $('#modalAnnouncementTitle').text('标题:' + <?php echo json_encode($announcement_title, JSON_UNESCAPED_UNICODE); ?>);
+    $('#modalAnnouncementContent').text('内容:' + <?php echo json_encode($announcement_content, JSON_UNESCAPED_UNICODE); ?>);
+    $('#modalAnnouncementTime').text('发布时间:<?php echo $simple_time; ?>');
+    $('#announcementModal').modal('show');
+    <?php endif; ?>
+
+    $('.announcement-link').on('click', function(e) {
+        e.preventDefault();
+        var title = $(this).data('title');
+        var content = $(this).data('content');
+        var created = $(this).data('created');
+        $('#modalAnnouncementTitle').text('标题:' + title);
+        $('#modalAnnouncementContent').text('内容:' + content);
+        $('#modalAnnouncementTime').text('发布时间:' + formatTime(created));
+        $('#announcementModal').modal('show');
+    });
 });
 </script>
 </body>
